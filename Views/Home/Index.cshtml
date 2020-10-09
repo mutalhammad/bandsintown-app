@@ -10,12 +10,12 @@
             <div class="row">
                 @* Search form div *@
                 <div class="col-md-12">
-                    <form role="form">
+                    <form role="form" method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Index" onsubmit="showLoader(this);">
                         <div class="form-group">
-                            <label for="searchedText">
+                            <label for="searchTerm">
                                 Search
                             </label>
-                            <input type="text" class="form-control" id="searchedText" />
+                            <input type="text" class="form-control" name="searchTerm" id="searchTerm" value="@ViewBag.searchedTerm"/>
                         </div>
                         <button type="submit" class="btn btn-primary">
                             Submit
