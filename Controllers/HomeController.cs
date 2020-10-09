@@ -39,14 +39,14 @@ namespace bandsintown_app.Controllers
             dynamic data = JObject.Parse(response.Content);
             var model = JsonConvert.DeserializeObject<List<ArtistData>>(data.artists);
 
-            if (viewpage == "1")
-            {
-                ViewBag.Page = "1";
-            }
-            else if (viewpage == "2")
-            {
-                ViewBag.Page = "2";
-            }
+            //if (viewpage == "1")
+            //{
+            //    ViewBag.Page = "1";
+            //}
+            //else if (viewpage == "2")
+            //{
+            //    ViewBag.Page = "2";
+            //}
 
             return PartialView(response.Content);
         }
