@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    if (ViewBag.Page == "1")
+    {
+        @*@Html.Partial("ViewPage1");*@
+        <div class="container-fluid">
+            <div class="row">
+                @* Search form div *@
+                <div class="col-md-12">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="searchedText">
+                                Search
+                            </label>
+                            <input type="text" class="form-control" id="searchedText" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+            @{
+                Html.RenderPartial("SearchedArtists");
+            }
+        </div>
+    }
+
+    else if (ViewBag.Page == "2")
+    {
+        @Html.Partial("ArtistEventDetails");
+    }
+}

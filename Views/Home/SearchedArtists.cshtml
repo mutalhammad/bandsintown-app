@@ -1,0 +1,124 @@
+﻿@*@model IEnumerable<bandsintown_app.Models.ArtistData>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.url)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.image_url)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.thumb_url)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.facebook_page_url)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.mbid)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tracker_count)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.upcoming_event_count)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.url)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.image_url)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.thumb_url)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.facebook_page_url)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mbid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tracker_count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.upcoming_event_count)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@
+
+@foreach (var item in Model)
+{
+    <h2>@item</h2>
+}
+
+<div class="row">
+    @* Result text div *@
+    <div class="col-md-12">
+        <h4 name="resultsCountText" style="margin: 1em 0em 0em 0em;">
+            3 Results found for "Adeel"
+        </h4>
+
+    </div>
+</div>
+<div class="row">
+    @* Cards div *@
+    <div class="col-md-4">
+        <div class="row">
+
+            <div class="card" style="margin:1.25em;">
+                <img src="~/images/testImage.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="row">
+
+            <div class="card" style="margin:1.25em;">
+                <img src="~/images/testImage.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
