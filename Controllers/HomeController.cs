@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using bandsintown_app.Models;
 using RestSharp;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Configuration;
 
 namespace bandsintown_app.Controllers
@@ -17,11 +14,16 @@ namespace bandsintown_app.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private IConfiguration _configuration;
+        private Helper.Helper _helper;
+        private string SearchArtistDataUrl;
 
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
+            _helper = new Helper.Helper(_configuration);
+
+            SearchArtistDataUrl = _configuration.GetSection("AppSettings").GetSection("SearchArtistDataUrl").Value;
         }
 
         public IActionResult Index()
@@ -36,26 +38,33 @@ namespace bandsintown_app.Controllers
             ViewBag.page = "1";
             ViewBag.searchedTerm = searchTerm;
 
-            string searchArtistUrl = _configuration.GetSection("AppSettings").GetSection("SearchArtistUrl").Value;
-            string searchUrl = String.Format("{0}{1}",searchArtistUrl,searchTerm);
+            List<ArtistDataSearch> listArtistDataSearch = _helper.SearchArtistsByName(searchTerm);
 
+            return View(listArtistDataSearch);
+        }
 
-            var client = new RestClient(searchUrl);
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("postman-token", "7a7e6970-2778-a03a-090e-1ea03e0e40cc");
-            request.AddHeader("cache-control", "no-cache");
-            IRestResponse response = client.Execute(request);
+        public IActionResult ArtistEventDetails(string selectedArtistName)
+        {
+            ArtistAndEvents artistAndEvents = new ArtistAndEvents();
+            List<EventData> listEventData = new List<EventData>();
 
-            //var model = JsonConvert.DeserializeObject<List<ArtistData>>(response.Content);
+            List<ArtistDataSearch> listArtistDataSearch = _helper.SearchArtistsByName(selectedArtistName);
 
-            dynamic data = JObject.Parse(response.Content);
-            //var model = JsonConvert.DeserializeObject<List<ArtistData>>(data.artists);
+            foreach (var item in listArtistDataSearch)
+            {
+                if (item.name.Equals(selectedArtistName))
+                {
+                    string url = String.Format("{0}{1}/events/", SearchArtistDataUrl, item.name);
+                    IRestResponse restResponse = _helper.MakeRequest(url);
 
-            List<ArtistDataSearch> test = data.artists.ToObject<List<ArtistDataSearch>>();
+                    listEventData = JsonConvert.DeserializeObject<List<EventData>>(restResponse.Content);
 
-            
+                    artistAndEvents.artistData = item.artistData;
+                    artistAndEvents.listEventsData = listEventData;
+                }
+            }
 
-            return View(test);
+            return View(artistAndEvents);
         }
 
         public IActionResult Privacy()

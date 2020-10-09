@@ -12,5 +12,7 @@ namespace bandsintown_app.Models
         public string imageSrc { get; set; }
         public string verifiedSrc { get; set; }
         public string href { get; set; }
+        public ArtistData artistData { get; set; }
+
     }
 }

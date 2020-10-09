@@ -1,77 +1,99 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@{
+    ViewData["Title"] = "Home";
+}
 
-<div class="container-fluid">
-    <div class="row">
-        @* Selected Artist div *@
+@model bandsintown_app.Models.ArtistAndEvents
 
-        <a href="#" class="btn btn-primary">Back to results</a>
+    <div class="container-fluid">
+        <div class="row">
+            @* Selected Artist div *@
 
-        <div class="col-md-12">
-            <div class="col-md-4">
-                <div class="row">
+            <a href="javascript:history.back()" class="btn btn-primary">Back to results</a>
 
-                    <div class="card" style="margin:1.25em 0em 1.25em 0em;">
-                        <img src="~/images/testImage.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        @* Result text div *@
-        <div class="col-md-12">
-            <h4 name="eventsCountText" style="margin: 1em 0em 1em 0em;">
-                8 upcoming events
-            </h4>
-
-        </div>
-    </div>
-    <div class="row">
-        @* Cards div *@
-        <div class="col-md-4">
-            <div class="card">
-                <h5 class="card-header">
-                    EVENT DETAILS
-                </h5>
-                <div class="card-body">
+            <div class="col-md-12">
+                <div class="col-md-4">
                     <div class="row">
-                        <div class="col">
-                            <p><strong>Country</strong></p>
-                            <p>
-                                Pakistan
-                            </p>
-                            <p>
 
-                            </p>
-                            <p><strong>City</strong></p>
-                            <p>
-                                Islamabad
-                            </p>
-                            <p>
-
-                            </p>
+                        <div class="card" style="margin:1.25em;">
+                            <img src="@Model.artistData.image_url" class="card-img-top" name="@Model.artistData.name" alt="...">
+                            <div class="card-body">
+                                <a href="#" style="color:black;">@Model.artistData.name</a>
+                                <a name="@Model.artistData.name" href="@Model.artistData.facebook_page_url">@Model.artistData.facebook_page_url</a>
+                            </div>
                         </div>
-                        <div class="col">
-                            <p><strong>Venue</strong></p>
-                            <p>F-9 Park</p>
-                            <p>
 
-                            </p>
-                            <p><strong>Date</strong></p>
-                            <p>
-                                28 Oct, 2020
-                            </p>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        @if (Model.listEventsData != null && Model.listEventsData.Count > 0)
+        {
+            <div class="row">
+                @* Result text div *@
+                <div class="col-md-12">
+                    <h4 name="eventsCountText" style="margin: 1em 0em 1em 0em;">
+                        @Model.listEventsData.Count upcoming events
+                    </h4>
+
+                </div>
+            </div>
+            <div class="row">
+                @* Cards div *@
+
+                @foreach (EventData item in Model.listEventsData)
+                {
+                    <div class="col-md-4" style="margin-bottom:1.5em;">
+                        <div class="card">
+                            <h5 class="card-header">
+                                EVENT DETAILS
+                            </h5>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <p><strong>Country</strong></p>
+                                        <p>
+                                            @item.venue.country
+                                        </p>
+
+                                        <p><strong>City</strong></p>
+                                        <p>
+                                            @item.venue.city
+                                        </p>
+
+                                    </div>
+                                    <div class="col">
+                                        <p><strong>Venue</strong></p>
+                                        <p>@item.venue.location</p>
+                                        <p>
+
+                                        </p>
+                                        <p><strong>Date</strong></p>
+                                        <p>
+                                            @DateTime.Parse(item.datetime).Date
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                @* Result text div *@
+                <div class="col-md-12">
+                    <h4 name="eventsCountText" style="margin: 1em 0em 1em 0em;">
+                        No upcoming events
+                    </h4>
+
+                </div>
+            </div>
+        }
+
+
     </div>
-</div>

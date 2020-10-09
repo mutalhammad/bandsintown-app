@@ -1,7 +1,6 @@
 ﻿@model List<bandsintown_app.Models.ArtistDataSearch>
 
 @{
-
     if (Model != null && Model.Count > 0)
     {
         <div class="row">
@@ -21,20 +20,16 @@
                     <div class="row">
 
                         <div class="card" style="margin:1.25em;">
-                            <img src="@item.imageSrc" class="card-img-top" alt="...">
+                            <img src="@item.imageSrc" class="card-img-top" name="@item.name"  alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">@item.name</h5>
-                                <p class="card-text">@item.verifiedSrc</p>
-                                @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+                                <a href="@Url.Action("ArtistEventDetails", "Home", new { selectedArtistName = item.name })" style="color:black;">@item.name</a>
+                                <a name="@item.name" href="@item.artistData.facebook_page_url">@item.artistData.facebook_page_url</a>
                             </div>
                         </div>
 
                     </div>
                 </div>
-
             }
         </div>
     }
 }
-
-

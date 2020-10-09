@@ -12,6 +12,7 @@ namespace bandsintown_app.Models
         public string longitude { get; set; }
         public string city { get; set; }
         public string region { get; set; }
+        public string location { get; set; }
         public string country { get; set; }
     }
 }
